@@ -1,5 +1,5 @@
 # Sentinel Enterprise Bug & Security Detection Engine
-[![CI](https://github.com/yourusername/matics/actions/workflows/ci.yml/badge.svg)](https://github.com/yourusername/matics/actions/workflows/ci.yml) [![Codecov](https://codecov.io/gh/yourusername/matics/branch/main/graph/badge.svg)](https://codecov.io/gh/yourusername/matics)
+[![CI](https://github.com/pavan67-git/sentinel-bug-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/pavan67-git/sentinel-bug-engine/actions/workflows/ci.yml) [![Codecov](https://codecov.io/gh/pavan67-git/sentinel-bug-engine/branch/main/graph/badge.svg)](https://codecov.io/gh/pavan67-git/sentinel-bug-engine)
 ### High-Precision Multi-Language Static & LLM Vulnerability Auditor with Joint Verification Engine (JVE)
 
 ---
