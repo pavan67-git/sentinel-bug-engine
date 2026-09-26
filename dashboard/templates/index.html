@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sentinel Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Sentinel Scan Dashboard</h1>
+    <div class="input-group">
+      <label for="path">Target Path:</label>
+      <input type="text" id="path" placeholder="/path/to/code" />
+    </div>
+    <div class="input-group">
+      <label for="patterns">Patterns (JSON):</label>
+      <textarea id="patterns" placeholder="{\n  \"todo_finder\": {\n    \"regex\": \"TODO\",\n    \"description\": \"Detect TODO comments\",\n    \"severity\": \"LOW\",\n    \"category\": \"CODE_QUALITY\"\n  }\n}"></textarea>
+    </div>
+    <button id="scanBtn">Run Scan</button>
+    <h2>Results</h2>
+    <pre id="output">Press \"Run Scan\" to see results.</pre>
+  </div>
+  <script>
+    document.getElementById('scanBtn').addEventListener('click', async () => {
+      const path = document.getElementById('path').value;
+      const patternsText = document.getElementById('patterns').value;
+      let patterns = {};
+      try {
+        patterns = JSON.parse(patternsText);
+      } catch (e) {
+        alert('Invalid JSON in patterns field');
+        return;
+      }
+      const response = await fetch('/scan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ target_path: path, patterns })
+      });
+      const data = await response.json();
+      document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+    });
+  </script>
+</body>
+</html>

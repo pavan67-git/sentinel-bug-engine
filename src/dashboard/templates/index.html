@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sentinel Scan Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Sentinel Scan Dashboard</h1>
+  </header>
+  <main>
+    <section class="controls">
+      <label for="target">Target directory:</label>
+      <input type="text" id="target" placeholder=". (current directory)" value=".">
+      <button id="scanBtn">Run Scan</button>
+    </section>
+    <section class="results" id="results">
+      <p class="placeholder">No results yet. Enter a target and click "Run Scan".</p>
+    </section>
+  </main>
+  <script>
+    const scanBtn = document.getElementById('scanBtn');
+    const targetInput = document.getElementById('target');
+    const resultsDiv = document.getElementById('results');
+
+    function renderFindings(findings) {
+      if (!findings.length) {
+        resultsDiv.innerHTML = '<p class="no-results">No findings detected.</p>';
+        return;
+      }
+      const table = document.createElement('table');
+      const thead = document.createElement('thead');
+      const headerRow = document.createElement('tr');
+      const headers = ['ID', 'File', 'Line(s)', 'Title', 'Severity', 'Category', 'CWE', 'Pattern'];
+      headers.forEach(h => {
+        const th = document.createElement('th');
+        th.textContent = h;
+        headerRow.appendChild(th);
+      });
+      thead.appendChild(headerRow);
+      table.appendChild(thead);
+      const tbody = document.createElement('tbody');
+      findings.forEach(f => {
+        const tr = document.createElement('tr');
+        const cells = [
+          f.id,
+          f.file_path,
+          `${f.start_line}-${f.end_line}`,
+          f.title,
+          f.severity,
+          f.category,
+          f.cwe ? f.cwe.cwe_id : '',
+          f.pattern_name || ''
+        ];
+        cells.forEach(c => {
+          const td = document.createElement('td');
+          td.textContent = c || '';
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+      table.appendChild(tbody);
+      resultsDiv.innerHTML = '';
+      resultsDiv.appendChild(table);
+    }
+
+    scanBtn.addEventListener('click', async () => {
+      const target = encodeURIComponent(targetInput.value.trim() || '.');
+      resultsDiv.innerHTML = '<p class="loading">Scanning…</p>';
+      try {
+        const resp = await fetch(`/api/scan?target=${target}`);
+        const data = await resp.json();
+        renderFindings(data);
+      } catch (e) {
+        resultsDiv.innerHTML = `<p class="error">Error: ${e.message}</p>`;
+      }
+    });
+  </script>
+</body>
+</html>

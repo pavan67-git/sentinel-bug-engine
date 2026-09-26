@@ -1,0 +1,187 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "SentinelBugEngine",
+          "version": "0.1.0",
+          "informationUri": "https://github.com/sentinel/bug-engine",
+          "rules": [
+            {
+              "id": "CWE-502",
+              "name": "Unsafe Dynamic Code Evaluation (eval/Function)",
+              "shortDescription": {
+                "text": "Unsafe Dynamic Code Evaluation (eval/Function)"
+              },
+              "fullDescription": {
+                "text": "Use of dynamic code evaluation functions allows direct execution of arbitrary code strings if supplied by untrusted sources."
+              },
+              "properties": {
+                "tags": [
+                  "SECURITY",
+                  "CWE-502"
+                ]
+              }
+            },
+            {
+              "id": "CWE-78",
+              "name": "Dangerous OS Command Execution",
+              "shortDescription": {
+                "text": "Dangerous OS Command Execution"
+              },
+              "fullDescription": {
+                "text": "Direct invocation of system shell with potentially untrusted dynamic input can allow arbitrary command injection."
+              },
+              "properties": {
+                "tags": [
+                  "SECURITY",
+                  "CWE-78"
+                ]
+              }
+            },
+            {
+              "id": "CWE-798",
+              "name": "Hardcoded API Secret or Private Key",
+              "shortDescription": {
+                "text": "Hardcoded API Secret or Private Key"
+              },
+              "fullDescription": {
+                "text": "A potential hardcoded secret or token was detected in source code. Credentials must never be committed to source control."
+              },
+              "properties": {
+                "tags": [
+                  "SECURITY",
+                  "CWE-798"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "CWE-502",
+          "level": "error",
+          "message": {
+            "text": "Use of dynamic code evaluation functions allows direct execution of arbitrary code strings if supplied by untrusted sources."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/samples/vulnerable_sample.js"
+                },
+                "region": {
+                  "startLine": 9,
+                  "endLine": 9
+                }
+              }
+            }
+          ],
+          "properties": {
+            "jve_verdict": "LIKELY_TRUE_POSITIVE",
+            "confidence_score": 0.6
+          }
+        },
+        {
+          "ruleId": "CWE-78",
+          "level": "error",
+          "message": {
+            "text": "Direct invocation of system shell with potentially untrusted dynamic input can allow arbitrary command injection."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/samples/vulnerable_sample.js"
+                },
+                "region": {
+                  "startLine": 15,
+                  "endLine": 15
+                }
+              }
+            }
+          ],
+          "properties": {
+            "jve_verdict": "LIKELY_TRUE_POSITIVE",
+            "confidence_score": 0.6
+          }
+        },
+        {
+          "ruleId": "CWE-502",
+          "level": "error",
+          "message": {
+            "text": "Use of dynamic code evaluation functions allows direct execution of arbitrary code strings if supplied by untrusted sources."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/samples/vulnerable_sample.js"
+                },
+                "region": {
+                  "startLine": 15,
+                  "endLine": 15
+                }
+              }
+            }
+          ],
+          "properties": {
+            "jve_verdict": "LIKELY_TRUE_POSITIVE",
+            "confidence_score": 0.6
+          }
+        },
+        {
+          "ruleId": "CWE-798",
+          "level": "error",
+          "message": {
+            "text": "A potential hardcoded secret or token was detected in source code. Credentials must never be committed to source control."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/samples/vulnerable_sample.py"
+                },
+                "region": {
+                  "startLine": 6,
+                  "endLine": 6
+                }
+              }
+            }
+          ],
+          "properties": {
+            "jve_verdict": "LIKELY_TRUE_POSITIVE",
+            "confidence_score": 0.6
+          }
+        },
+        {
+          "ruleId": "CWE-78",
+          "level": "error",
+          "message": {
+            "text": "Direct invocation of system shell with potentially untrusted dynamic input can allow arbitrary command injection."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "tests/samples/vulnerable_sample.py"
+                },
+                "region": {
+                  "startLine": 18,
+                  "endLine": 18
+                }
+              }
+            }
+          ],
+          "properties": {
+            "jve_verdict": "LIKELY_TRUE_POSITIVE",
+            "confidence_score": 0.6
+          }
+        }
+      ]
+    }
+  ]
+}
