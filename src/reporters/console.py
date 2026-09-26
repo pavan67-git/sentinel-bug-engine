@@ -7,7 +7,14 @@ from rich.syntax import Syntax
 from rich.text import Text
 from src.models.finding import Finding, Severity, VerificationVerdict
 
-console = Console()
+import sys
+
+console = Console(
+    file=open(sys.stdout.fileno(), mode="w", encoding="utf-8", errors="replace", closefd=False)
+    if sys.platform == "win32" else None,
+    highlight=True,
+)
+
 
 SEVERITY_STYLES = {
     Severity.CRITICAL: "bold red on black",
